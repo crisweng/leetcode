@@ -1,0 +1,46 @@
+class Solution {
+public:
+    void setZeroes(vector<vector<int> > &matrix) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        int n = matrix.size();
+        if(n == 0) return;
+        int m = matrix[0].size();
+        bool f = false;
+        bool flag = false;
+        for(int i = 0; i < m; i++){
+            if(matrix[0][i] == 0){
+                flag = true;
+                break;
+            }
+        }
+        
+        for(int i = 1; i < n; i++){
+            f = false;
+            for(int j = 0; j < m; j++){
+                if(matrix[i][j] == 0){
+                    matrix[0][j] = 0;
+                    f = true;
+                }
+            }
+            if(!f) continue;
+            for(int j = 0; j < m; j++){
+                matrix[i][j] = 0;
+            }
+        }
+        
+        for(int i = 0; i < m; i++){
+            if(matrix[0][i] != 0) continue;
+            
+            for(int j = 1; j < n; j++){
+                matrix[j][i] = 0;
+            }
+        }
+        
+        if(flag){
+            for(int i = 0; i < m; i++){
+                matrix[0][i] = 0;
+            }
+        }
+    }
+};
