@@ -1,0 +1,56 @@
+Run Status: Accepted!
+Program Runtime: 232 milli secs
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode *addTwoNumbers(ListNode *a, ListNode *b) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        ListNode *c = new ListNode(0);
+        ListNode *p = c;
+        int mod = 0;
+        while(a && b){
+            ListNode *now = new ListNode((a->val + b->val + mod)%10);
+            mod = (mod + a->val + b->val)/10;
+            a = a->next;
+            b = b->next;
+            p->next = now;
+            p = p->next;
+        }
+        
+        while(a){
+            ListNode *now = new ListNode((a->val + mod)%10);
+            mod = (a->val + mod)/10;
+            a = a->next;
+            p->next = now;
+            p = p->next;
+        }
+        
+        while(b){
+            ListNode *now = new ListNode((b->val + mod)%10);
+            mod = (b->val + mod)/10;
+            b = b->next;
+            p->next = now;
+            p = p->next;
+        }
+        
+        if(mod != 0){
+            ListNode *now = new ListNode(mod);
+            p->next = now;
+            p = p->next;
+        }
+        
+        p = c;
+        c = c->next;
+        delete p;
+        return c;
+    }
+};
