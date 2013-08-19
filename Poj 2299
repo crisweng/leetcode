@@ -1,0 +1,56 @@
+#include <iostream>
+using namespace std;
+const int num = 500010;
+int data[num];
+long long Merge(int *data, int l, int m, int r){
+	int *store = new int[r - l];
+	int i = l, j = m;
+ 	long long ans = 0;
+    int cnt = 0;
+	while(i < m && j < r){
+	    if(data[i]<= data[j]){
+            store[cnt++] = data[i++];
+	    }else{
+            store[cnt++] = data[j++];
+            ans += m - i;
+	    }
+	}
+	while(i < m){
+	    store[cnt++] = data[i++];
+	}
+	while(j < l){
+	    store[cnt++] = data[j++];
+	}
+	for(i = 0; i < cnt; i++){
+        data[i + l] = store[i];
+	}
+	delete []store;
+	return ans;
+
+}
+
+long long MergeSort(int *data, int l, int r){
+	if(r - l == 1) return 0;
+	int m = (r + l)/2;
+	long long a = 0, b = 0, c = 0;
+	a = MergeSort(data, l, m);
+	b = MergeSort(data, m, r);
+	c = Merge(data, l , m , r);
+	return a + b + c;
+}
+
+long long FindReversePair(int *data, int n){
+	if(n < 2) return 0;
+	return MergeSort(data, 0, n);
+}
+int main(){
+	int n;
+	while(cin>>n){
+        if(n == 0) break;
+		for(int i = 0; i < n; i++){
+	        cin>>data[i];
+        }
+        cout<<FindReversePair(data, n)<<endl;
+	}
+	return 0;
+}
