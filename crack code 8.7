@@ -1,0 +1,42 @@
+#include "stdafx.h"
+#include <iostream>
+#include <vector>
+using namespace std;
+int money[] = {25, 10, 5, 1};
+void CountWays(int n, int k, int &ans){
+	//cout<< n <<" "<< k <<" "<<ans<<endl;
+	if(n == 0){
+		ans++;
+		return;
+	}
+	for(int i = k; i < 4; i++){
+		if(n >= money[i]){
+			CountWays(n - money[i], i, ans);
+		}
+	}
+}
+int CountWays1(int n){
+	vector<int> dp(n + 1, 0);
+	dp[0] = 1;
+	for(int i = 0; i < 4; i++){
+		for(int j = 0; j <= n; j++){
+			if(j - money[i] >= 0){
+				dp[j] += dp[j - money[i]];
+			}
+		}
+	}
+	return dp[n];
+}
+int main(){
+	int n;
+	int ans1 = 0, ans2 = 0;
+	while(cin>>n){
+		if(n < 1) continue;
+		ans1 = 0;
+		CountWays(n, 0, ans1);
+		cout<<ans1<<endl;
+		ans2 = CountWays1(n);
+		cout<<ans2<<endl;
+	}
+
+}
