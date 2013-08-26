@@ -1,0 +1,35 @@
+#include "stdafx.h"
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+void parentheses(int n){
+	vector<vector<string> > ans(n + 1);
+	if(n == 0) return;
+	ans[0].push_back("");
+	for(int i = 1; i <= n; i++){
+		for(int j = 0; j < i; j++){
+			vector<string> A = ans[j];
+			vector<string> B = ans[i - j - 1];
+			for(int k = 0; k < A.size(); k++){
+				for(int l = 0; l < B.size(); l++){
+					string str = "(" + A[k] + ")" + B[l];
+					//cout<<str<<endl;
+					ans[i].push_back(str);
+				}
+			}
+		}
+	}
+
+	for(int i = 0; i < ans[n].size(); i++){
+		cout<<ans[n][i]<<endl;
+	}
+}
+int main(){
+	int n;
+	while(cin>>n){
+		parentheses(n);
+	}
+	return 0;
+}
