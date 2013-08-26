@@ -1,0 +1,47 @@
+class Solution {
+public:
+    bool check(vector<int> loc, int k, int n){
+        for(int i = 0; i < n; i++){
+            if(loc[i] == k) return false;
+            if(abs(i - n) == abs(loc[i] - k)) return false;
+        }
+        
+        return true;
+    }
+    
+    vector<string> getChess(vector<int> loc){
+        string str;
+        int n = loc.size();
+        for(int i = 0; i < n; i++){
+            str.push_back('.');
+        }
+        vector<string> chess(n, str);
+        for(int i = 0; i < n; i++){
+            chess[i][loc[i]] = 'Q';
+        }
+        return chess;
+    }
+
+    void placeNQueens(int n, int k, vector<vector<string> > &ans, vector<int> &loc){
+        if(k == n){
+            ans.push_back(getChess(loc));
+            return;
+        }
+        
+        for(int i = 0; i < n; i++){
+            if(check(loc, i, k)){
+                loc[k] = i;
+                placeNQueens(n, k + 1, ans, loc);
+            }
+        }
+    }
+    vector<vector<string> > solveNQueens(int n) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        vector<vector<string> > ans;
+        if(n < 1) return ans;
+        vector<int> loc(n, 0);
+        placeNQueens(n, 0, ans, loc);
+        return ans;
+    }
+};
