@@ -39,3 +39,45 @@ public:
         return ans;
     }
 };
+
+
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<vector<int> > levelOrder(TreeNode *root) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        vector<vector<int> > ans;
+        if(root == NULL) return ans;
+        vector<TreeNode *> store;
+        store.push_back(root);
+        int i = 0;
+        int size = store.size();
+        vector<int> now;
+        while(i < size){ 
+            now.clear();
+            for(int j = i; j < size; j++){
+                now.push_back(store[j]->val);//循环里都把j写成了i,粗心
+                if(store[j]->left){
+                    store.push_back(store[j]->left);
+                }
+                if(store[j]->right){
+                    store.push_back(store[j]->right);
+                }
+            }
+            
+            ans.push_back(now);
+            i = size;
+            size = store.size();
+        }
+        return ans;
+    } 
+};
