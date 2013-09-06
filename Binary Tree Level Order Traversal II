@@ -1,0 +1,41 @@
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    void traversal(vector<TreeNode *> &p, vector<vector<int> > &ans){
+        vector<int> now;
+        vector<TreeNode *> next;
+        for(int i = 0; i < p.size(); i++){
+            now.push_back(p[i]->val);
+            if(p[i]->left){
+                next.push_back(p[i]->left);
+            }
+            if(p[i]->right){
+                next.push_back(p[i]->right);
+            }
+        }
+        
+        if(next.size() > 0){
+            traversal(next, ans);
+        }
+        
+        ans.push_back(now);
+    }
+    vector<vector<int> > levelOrderBottom(TreeNode *root) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        vector<vector<int> > ans;
+        if(root == NULL) return ans;
+        vector<TreeNode *> p;
+        p.push_back(root);
+        traversal(p, ans);
+        return ans;           
+    }
+};
