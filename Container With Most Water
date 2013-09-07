@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int maxArea(vector<int> &height) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        if(height.size() < 2) return 0;
+        int l = 0, r = height.size() - 1;
+        int ans = (r - l)*min(height[l], height[r]);
+        int i = l + 1, j = r - 1;
+        while(i < r && j > l){
+            if(height[l] < height[r] && height[i] > height[l]){
+                int tmp =(r - i)*min(height[i], height[r]);
+                ans = max(ans, tmp);
+                l = i;
+                i++;
+            }else if(height[l] < height[r]){
+                i++;
+            }else if(height[l] >= height[r] && height[j] > height[r]){
+                int tmp =(j - l)*min(height[l], height[j]);
+                ans = max(ans, tmp);
+                r = j;
+                j--;
+            }else{
+                j--;
+            }
+        }
+        
+        return ans;
+    }
+};
