@@ -1,0 +1,26 @@
+class Solution {
+public:
+    void Sum(vector<int> &candidates, vector<int> &now, vector<vector<int> > &ans, int k, int target){
+        if(target == 0){
+            ans.push_back(now);
+            return;
+        }
+        
+        for(int i = k; i < candidates.size(); i++){
+            if(candidates[i] > target) break;
+            now.push_back(candidates[i]);
+            Sum(candidates, now, ans, i, target - candidates[i]);
+            now.pop_back();
+        }
+    }
+    vector<vector<int> > combinationSum(vector<int> &candidates, int target) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        vector<vector<int> > ans;
+        if(target <= 0 || candidates.size() == 0) return ans;
+        sort(candidates.begin(), candidates.end());
+        vector<int> now;
+        Sum(candidates, now, ans, 0, target);
+        return ans;
+    }
+};
