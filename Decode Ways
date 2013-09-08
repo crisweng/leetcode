@@ -30,3 +30,36 @@ public:
         
     } 
 };
+
+
+//see other code and modify
+class Solution {
+public:
+    int numDecodings(string s) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        int n = s.size();
+        if(n < 1) return n;
+        int a = 1, b = 1;
+        if(s[0] == '0') return 0;
+        for(int i = 1; i < n; i++){
+            if(s[i - 1] == '1' || (s[i - 1] == '2' && s[i] < '7')){
+                if(s[i] == '0'){
+                    b = a;
+                }else{
+                    int tmp = a;
+                    a = b;
+                    b = tmp + b;
+                }
+                
+            }else {
+                if(s[i] == '0') return 0;
+                a = b;
+            }
+            
+        }
+        
+        return b;
+        
+    } 
+};
