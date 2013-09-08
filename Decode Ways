@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int numDecodings(string s) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        int n = s.size();
+        if(n < 1) return n;
+        int a = 1, b = 1;
+        char num = s[0];
+        if(num == '0') return 0;
+        for(int i = 1; i < n; i++){
+            if(s[i] == '0'){
+                if(num > '2' || num == '0'){//开始木有加上为'0'判断
+                    return 0;
+                }else{
+                    b = a;
+                }
+            }else if(num == '1' || (num == '2' && s[i] < '7')){
+                int tmp = a;
+                a = b;
+                b = tmp + b;//错误的写成了a+b，粗心
+            }else {
+                a = b;
+            }
+            
+            num = s[i];
+        }
+        
+        return b;
+        
+    } 
+};
