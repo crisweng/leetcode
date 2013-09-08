@@ -1,0 +1,43 @@
+class Solution {
+public:
+    string intToStr(int n){
+        char temp[64];
+        sprintf(temp, "%d", n);
+        string s(temp);
+        return s;
+    }
+    string countAndSay(int n) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        string ans;
+        if(n < 1) return ans;
+        ans = "1";
+        string next;
+        char a = 0;
+        int cnt = 0;
+        while(n > 1){
+            next.clear();
+            a = 0, cnt = 0;
+            for(int i = 0; i < ans.size(); i++){
+                if(a == 0){
+                    a = ans[i];
+                    cnt = 1;
+                }else if(ans[i] == a){
+                    cnt++;
+                }else{
+                    next.append(intToStr(cnt));
+                    next.push_back(a);//这里错误写成a+'0'
+                    cnt = 1;
+                    a = ans[i];
+                }
+            }
+            
+            next.append(intToStr(cnt));
+            next.push_back(a);
+            ans = next;
+            n--;
+        }
+        
+        return ans;
+    }
+};
