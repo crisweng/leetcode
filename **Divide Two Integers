@@ -1,0 +1,54 @@
+class Solution {
+public:
+    int divide(int dd, int dr) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        if(dr == 0) return 0x7fffffff;
+        if(abs(dd) < abs(dr)) return 0;//case3直接溢出
+        bool symbol = (dd > 0 && dr > 0) || (dd < 0 && dr < 0);
+        dd = abs(dd);//case 2,3溢出
+        dr = abs(dr);
+        int ans = 0;
+        int i = 0;
+        while(dd >= dr){
+            i = 0;
+            while((dr<<i) <= dd){//case1溢出i取到了31
+                i++;
+            }
+            i--;
+            dd = dd - (dr<<i);
+            ans += 1<<i;
+        }
+        
+        return symbol? ans:(0 - ans);
+        
+    }
+};
+class Solution {
+public:
+    int divide(int dd, int dr) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        if(dr == 0) return 0x7fffffff;
+        long long d = dd;
+        long long r = dr;
+        d = abs(d);
+        r = abs(r);
+        bool symbol = (dd > 0 && dr > 0) || (dd < 0 && dr < 0);
+        int ans = 0;
+        int i = 0;
+        while(d >= r){
+            i = 0;
+            while((r<<i) <= d){
+                i++;
+            }
+            
+            i--;
+            d = d - (r<<i);
+            ans += 1<<i;
+        }
+        
+        return symbol? ans:(0 - ans);
+        
+    }
+};
