@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int firstMissingPositive(int A[], int n) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        if(n == 0) return 1;
+        int now;
+        for(int i = 0; i < n; i++){
+            if(A[i] != i + 1){
+                if(A[i]  <= 0 || A[i] > n || A[i] == A[A[i] - 1]) continue;
+                //没有考虑重复的情况，最开始没有加 A[i] == A[A[i] - 1]重复情况，直接死循环
+                swap(A[i], A[A[i] - 1]);
+                i--;
+            }
+        }
+        
+        for(int i = 0; i < n; i++){
+            if(A[i] != i + 1) return i + 1;
+        }
+        
+        return n + 1;
+    }
+};
