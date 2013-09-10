@@ -4,10 +4,9 @@ public:
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
         vector<int> ans;
-        if(n <= 0) return ans;
+        if(n < 0) return ans;
         ans.push_back(0);
-        ans.push_back(1);
-        for(int i = 1; i < n; i++){
+        for(int i = 0; i < n; i++){
             int size = ans.size();
             int tmp = 1<<i;
             for(int j = size - 1; j >= 0; j--){
