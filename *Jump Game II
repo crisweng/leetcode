@@ -21,3 +21,25 @@ public:
         return f[n - 1];
     }
 };
+
+More cleaner code
+class Solution {
+public:
+    int jump(int A[], int n) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        int step = 0;
+        int last = 0;
+        int cur = 0;
+        for(int i = 0; i < n; i++){
+            if(i > last){
+                step++;
+                last = cur;
+            }
+            cur = max(cur, A[i] + i);
+        }
+        
+        if(last < n - 1) return -1;
+        return step;
+    }
+};
