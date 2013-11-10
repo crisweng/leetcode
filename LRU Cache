@@ -1,0 +1,55 @@
+class LRUCache{
+public:
+    LRUCache(int capacity)
+       : _size(capacity),
+         _timeStamp(0) {
+    }
+    
+    int get(int key) {
+        if (_keyToDate.find(key) != _keyToDate.end()) {
+            const pair<int, int>& item = _dateToItem[_keyToDate[key]];
+            Delete(key);
+            _set(key, item.second);
+            update();
+            return item.second;
+        } else {
+            return -1;
+        }
+     }
+    
+    void set(int key, int value) {
+        Delete(key);
+        _set(key, value);
+        update();
+    }
+    
+    
+private:
+    void _set(int key, int value) {
+        _keyToDate[key] = _timeStamp;
+        _dateToItem[_timeStamp] = make_pair(key, value);
+        _timeStamp++;
+    }
+    void update() {
+        while (_keyToDate.size() > _size) {
+            Delete((_dateToItem.begin()->second).first);
+        }
+    }
+    
+    bool Delete(int key) {
+        if (_keyToDate.find(key) != _keyToDate.end()) {
+            int timeStamp = _keyToDate[key];
+            _dateToItem.erase(timeStamp);
+            _keyToDate.erase(key);
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+private:
+    int _size;
+    int _timeStamp;
+    map<int, pair<int, int> > _dateToItem;
+    map<int, int> _keyToDate;
+};
